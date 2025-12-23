@@ -3,18 +3,29 @@ const showHours = document.getElementById("hours-countdown");
 const showMinutes = document.getElementById("min-countdown");
 const showSeconds = document.getElementById("sec-countdown");
 
-const setDate = new Date(2026, 0, 2, 0, 11, 30);
+const setDate = new Date(2026, 5, 11, 0); // June 11, 2026
 
 const myTime = () => {
-  const curentDate = new Date();
-  const diffTime = setDate - curentDate;
-  const day = new Date(diffTime).getDay();
-  const hour = new Date(diffTime).getHours();
-  const min = new Date(diffTime).getMinutes();
-  const sec = new Date(diffTime).getSeconds();
+  const currentDate = new Date();
+  const diffTime = setDate - currentDate;
+
+  if (diffTime <= 0) {
+    showDay.textContent = 0;
+    showHours.textContent = 0;
+    showMinutes.textContent = 0;
+    showSeconds.textContent = 0;
+    return;
+  }
+
+  const day = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const hour = Math.floor((diffTime / (1000 * 60 * 60)) % 24);
+  const min = Math.floor((diffTime / (1000 * 60)) % 60);
+  const sec = Math.floor((diffTime / 1000) % 60);
+
   showDay.textContent = day;
   showHours.textContent = hour;
   showMinutes.textContent = min;
   showSeconds.textContent = sec;
 };
+
 setInterval(myTime, 1000);
